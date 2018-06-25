@@ -1,0 +1,8 @@
+DCMotor	KEYWORD1
+setupDirection	KEYWORD2
+power	KEYWORD2
+stop KEYWORD2
+
+FORWARD       LITERAL1
+BACKWARD      LITERAL1
+
