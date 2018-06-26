@@ -1,17 +1,19 @@
 #include <DCMotor.h>
 
-DCMotor motor;
+DCMotor motor(2*PI);
 
 void setup() {
-  // put your setup code here, to run once:
-	motor.attachPower(0,0,255);
-	motor.attachDirection(0);
+	motor.attachPower(4,0,1023);
+	motor.attachDirection(2);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   motor.setupDirection(FORWARD);
-  motor.power(50);
+  motor.power(800);
+	delay(3000);
   motor.stop();
-
+	motor.setupDirection(BACKWARD);
+  motor.power(8S00);
+	delay(3000);
+  motor.stop();
 }
