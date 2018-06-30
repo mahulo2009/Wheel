@@ -53,7 +53,7 @@ void DCMotor::move(float velocity)
 		setupDirection(FORWARD);
 		this->velocity_=velocity;	
 	}
-	float duty = (max_duty_*velocity)/(max_speed_);
+	float duty = (max_duty_*this->velocity_)/(max_speed_);
 	power(duty);
 }
 
@@ -64,7 +64,7 @@ void DCMotor::power(float duty)
   if (duty>max_duty_)
     duty=max_duty_;
   this->duty_ = ceil(duty); 
-  #ifdef DC_MOTOR_DEBUG
+  #ifdef DCMOTOR_DEBUG
   Serial.print("DCMotor::power:");
   Serial.print("\t");
   Serial.print(this->duty_);

@@ -1,9 +1,9 @@
-#ifndef Motor_DCMotor_H
-#define Motor_DCMotor_H
+#ifndef DCMotor_H
+#define DCMotor_H
 
 #include "Arduino.h"
 
-#define DC_MOTOR_DEBUG 1
+#define DCMOTOR_DEBUG 1
 
 typedef enum { FORWARD, BACKWARD} DCMotor_Direction;
 
