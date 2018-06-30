@@ -1,4 +1,4 @@
-DCMotor	KEYWORD1
+Wheel	KEYWORD1
 setupDirection	KEYWORD2
 power	KEYWORD2
 stop KEYWORD2

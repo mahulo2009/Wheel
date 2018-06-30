@@ -1,6 +1,6 @@
-#include "DCMotor.h"
+#include "Wheel.h"
 
-DCMotor::DCMotor() : 
+Wheel::Wheel() : 
 	max_speed_(0),
 	velocity_(0),
 	duty_(0),
@@ -8,7 +8,7 @@ DCMotor::DCMotor() :
 {
 }
 
-DCMotor::DCMotor(float max_speed) : 
+Wheel::Wheel(float max_speed) : 
 	max_speed_(max_speed),
 	velocity_(0),
 	duty_(0),
@@ -16,7 +16,7 @@ DCMotor::DCMotor(float max_speed) :
 {
 }
 
-void DCMotor::attachPower(int pin,int min_duty, int max_duty)
+void Wheel::attachPower(int pin,int min_duty, int max_duty)
 {
   this->pin_power_ = pin;
 	this->min_duty_=min_duty;
@@ -24,27 +24,33 @@ void DCMotor::attachPower(int pin,int min_duty, int max_duty)
   pinMode(pin, OUTPUT);
 }
 
-void DCMotor::attachDirection(int pin)
+void Wheel::attachDirection(int pin)
 {
 	this->pin_direction_=pin;
 	pinMode(pin_direction_, OUTPUT);
 }
 
-void DCMotor::setupDirection(DCMotor_Direction direction) 
+void Wheel::setupDirection(Wheel_Direction direction) 
 {
   switch(direction) {
     case FORWARD:
 			this->direction_=FORWARD;
+  		#ifdef WHEEL_DEBUG
+		  Serial.println("Wheel::direction: LOW");
+		  #endif
       digitalWrite(pin_direction_,LOW);
       break;
     case BACKWARD:
 			this->direction_=BACKWARD;
+  		#ifdef WHEEL_DEBUG
+		  Serial.println("Wheel::direction: HIGH");
+		  #endif
       digitalWrite(pin_direction_,HIGH);
       break;
    }
 }
 
-void DCMotor::move(float velocity)
+void Wheel::move(float velocity)
 {
 	if (velocity<0) {
 		setupDirection(BACKWARD);
@@ -57,15 +63,15 @@ void DCMotor::move(float velocity)
 	power(duty);
 }
 
-void DCMotor::power(float duty)
+void Wheel::power(float duty)
 {
  if (duty<min_duty_)
     duty=min_duty_;
   if (duty>max_duty_)
     duty=max_duty_;
   this->duty_ = ceil(duty); 
-  #ifdef DCMOTOR_DEBUG
-  Serial.print("DCMotor::power:");
+  #ifdef WHEEL_DEBUG
+  Serial.print("Wheel::power:");
   Serial.print("\t");
   Serial.print(this->duty_);
   Serial.print("\n");
@@ -73,11 +79,20 @@ void DCMotor::power(float duty)
   analogWrite(pin_power_,this->duty_); 
 }
 
-void DCMotor::stop()
+void Wheel::stop()
 {
   this->duty_=0;
 	this->velocity_=0;
 	this->direction_=FORWARD;
+  #ifdef WHEEL_DEBUG
+  Serial.print("Wheel::power:");
+  Serial.print("\t");
+  Serial.print(this->duty_);
+  Serial.print("\n");
+  #endif
   analogWrite(pin_power_,0);
+  #ifdef WHEEL_DEBUG
+  Serial.println("Wheel::direction: LOW");
+  #endif
   digitalWrite(pin_direction_,LOW);
 }
