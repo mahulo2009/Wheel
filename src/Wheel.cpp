@@ -16,6 +16,12 @@ Wheel::Wheel(float max_speed) :
 {
 }
 
+float Wheel::getVelocity(float dt)
+{
+	return velocity_;
+}
+
+
 void Wheel::attachPower(int pin,int min_duty, int max_duty)
 {
   this->pin_power_ = pin;

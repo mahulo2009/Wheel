@@ -18,7 +18,7 @@ class Wheel {
     void power(float duty);																	//duty demanded
     void stop();																						//reset duty to 0 and direction to forward
 		inline Wheel_Direction getDirection() {return direction_;};
-		virtual float getVelocity(float dt){return velocity_;};
+		virtual float getVelocity(float dt);
 		inline int getDuty() {return duty_;};
   protected:
 		float velocity_;					//current velocity, related to the duty, sent to the motor.
