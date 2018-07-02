@@ -13,7 +13,7 @@ class Wheel {
     Wheel(float max_speed);																  //constructor with maximun speed [radians per sencond]
 		void attachPower(int pin,int min_duty, int max_duty);		//attach the power pin selecting the maximum and minimum duty
 		void attachDirection(int pin);													//attach the direction pin
-    void setupDirection(Wheel_Direction direction);				  //setup direction, H-bridge
+    virtual void setupDirection(Wheel_Direction direction);	//setup direction, H-bridge
 		void move(float velocity);															//velocity demanded radians per second.
     void power(float duty);																	//duty demanded
     void stop();																						//reset duty to 0 and direction to forward
