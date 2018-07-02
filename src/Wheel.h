@@ -21,14 +21,14 @@ class Wheel {
 		virtual float getVelocity(float dt);
 		inline int getDuty() {return duty_;};
   protected:
-		float velocity_;					//current velocity, related to the duty, sent to the motor.
+		float velocity_;			       //current velocity, related to the duty, sent to the motor.
   private:
-    int pin_power_;				//pin number for the motor power, pwm.
-    int pin_direction_;		//pin number for the motor direction, H-bridge.
-    int min_duty_;				//minimum duty
-    int max_duty_;				//maximun duty
-    float max_speed_;			//maximun speed of the motor in radians per second.
-    int duty_;						//duty currently sent to the motor.
+    int pin_power_;				      //pin number for the motor power, pwm.
+    int pin_direction_;		      //pin number for the motor direction, H-bridge.
+    int min_duty_;				      //minimum duty
+    int max_duty_;				      //maximun duty
+    float max_speed_;			      //maximun speed of the motor in radians per second.
+    int duty_;						      //duty currently sent to the motor.
 		Wheel_Direction direction_;	//current direction.
 };
 #endif

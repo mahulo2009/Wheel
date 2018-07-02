@@ -9,10 +9,10 @@
 
 class WheelEncoder : public Wheel {
   public:
-    WheelEncoder();													//default constructor.
+    WheelEncoder();									//default constructor.
     WheelEncoder(float max_speed);					//constructor with maximun speed [radians per sencond]
-		void attachEncoder(Encoder * encoder);
-		virtual float getVelocity(float dt);
+	void attachEncoder(Encoder * encoder);
+	virtual float getVelocity(float dt);
   private:
 		Encoder * encoder_;
 };
