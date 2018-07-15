@@ -3,7 +3,7 @@
 
 #include "Arduino.h"
 
-#define WHEEL_DEBUG 1
+//#define WHEEL_DEBUG 1
 
 typedef enum { FORWARD, BACKWARD} Wheel_Direction;
 
@@ -13,15 +13,27 @@ class Wheel {
     Wheel(float max_speed);																  //constructor with maximun speed [radians per sencond]
 		void attachPower(int pin,int min_duty, int max_duty);		//attach the power pin selecting the maximum and minimum duty
 		void attachDirection(int pin);													//attach the direction pin
-    virtual void setupDirection(Wheel_Direction direction);	//setup direction, H-bridge
-		void move(float velocity);															//velocity demanded radians per second.
     void power(float duty);																	//duty demanded
     void stop();																						//reset duty to 0 and direction to forward
-		inline Wheel_Direction getDirection() {return direction_;};
-		virtual float getVelocity(float dt);
-		inline int getDuty() {return duty_;};
-  protected:
-		float velocity_;			       //current velocity, related to the duty, sent to the motor.
+
+		inline Wheel_Direction getDirection() 
+      {return direction_;};
+    inline int getDuty() 
+      {return duty_;};
+    inline float getTargetVelocity() 
+      {return targetVelocity_;};
+    inline float getVelocity() 
+      {return currentVelocity_;};
+    inline float getDemandedVelocity() 
+      {return demandedVelocity_;};
+
+    virtual void setupDirection(Wheel_Direction direction); //setup direction, H-bridge
+    virtual void move(float velocity);                      //velocity demanded radians per second.
+    
+	protected:
+    float targetVelocity_;      //Target velocity [radians per second] 
+		float currentVelocity_;			//Current velocity [radians per second] 
+    float demandedVelocity_;    //Demanded velocity [radians per second]  
   private:
     int pin_power_;				      //pin number for the motor power, pwm.
     int pin_direction_;		      //pin number for the motor direction, H-bridge.
