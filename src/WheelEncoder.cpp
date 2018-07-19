@@ -58,7 +58,7 @@ void WheelEncoder::update_()
 {
 	this->currentVelocity_ = encoder_->getVelocity(this->period_pid_controller_);
 	if (pid_ != 0) {
-		this->demandedVelocity_ += 
+		this->demandedVelocity_= 
 			pid_->update(this->currentVelocity_,this->period_pid_controller_); //TODO Review this command
 	} else {
 		this->demandedVelocity_ = targetVelocity_;
