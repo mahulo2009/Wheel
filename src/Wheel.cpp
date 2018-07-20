@@ -60,19 +60,19 @@ void Wheel::move(float velocity)
 
 	if (this->demandedVelocity_<0) {
 		setupDirection(BACKWARD);	
-    float duty = ((max_duty_-min_duty_)* - this->demandedVelocity_)/(max_speed_)+min_duty_;
-    power(duty);
+    	float duty = ((max_duty_-min_duty_)* - this->demandedVelocity_)/(max_speed_)+min_duty_;
+    	power(duty);
 	} else {
-  	setupDirection(FORWARD);
-    float duty = ((max_duty_-min_duty_)* + this->demandedVelocity_)/(max_speed_)+min_duty_;
-    power(duty);
+  		setupDirection(FORWARD);
+    	float duty = ((max_duty_-min_duty_)* + this->demandedVelocity_)/(max_speed_)+min_duty_;
+    	power(duty);
 	}
 }
 
 void Wheel::power(float duty)
 {
- if (duty<min_duty_)
-    duty=min_duty_;
+ if (duty<=min_duty_)
+    duty=0;
   if (duty>max_duty_)
     duty=max_duty_;
   this->duty_ = ceil(duty); 
@@ -90,8 +90,8 @@ void Wheel::stop()
   this->duty_=0;
   this->targetVelocity_=0;
   this->currentVelocity_=0;
-	this->demandedVelocity_=0;
-	this->direction_=FORWARD;
+  this->demandedVelocity_=0;
+  this->direction_=FORWARD;
   #ifdef WHEEL_DEBUG
   Serial.print("Wheel::power:");
   Serial.print("\t");
