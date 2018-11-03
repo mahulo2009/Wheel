@@ -59,7 +59,7 @@ void Wheel::move(float velocity)
   this->demandedVelocity_= velocity;
 
 	if (this->demandedVelocity_<0) {
-		setupDirection(BACKWARD);	
+		  setupDirection(BACKWARD);	
     	float duty = ((max_duty_-min_duty_)* - this->demandedVelocity_)/(max_speed_)+min_duty_;
     	power(duty);
 	} else {
