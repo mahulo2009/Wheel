@@ -1,16 +1,13 @@
 #include "WheelEncoder.h"
 
 WheelEncoder::WheelEncoder() : 
-	Wheel(), period_pid_controller_(0.5),pid_(0)
+	period_pid_controller_(0.5),pid_(0)
 {
 	timer_setup_();
 }
 
-WheelEncoder::WheelEncoder(float max_speed) : 
-	Wheel(max_speed), period_pid_controller_(0.5),pid_(0)
-{
-	timer_setup_();
-}
+//TODO CALL FROM OUTISE USING TIMER TASK
+
 void WheelEncoder::timer_setup_()
 {
 	os_timer_setfn(&timer_,WheelEncoder::timer_callback_, this); 
@@ -25,22 +22,17 @@ void WheelEncoder::move(float velocity)
 	}
 }
 
-void WheelEncoder::attachEncoder(Encoder * encoder)
+void WheelEncoder::stop()
 {
-	this->encoder_= encoder;
+  this->targetVelocity_=0;
+	if (pid_ != 0) {
+		pid_->setTarget(this->targetVelocity_);
+	}  
 }
 
-void WheelEncoder::setupDirection(Wheel_Direction direction)
+void WheelEncoder::attachEncoder(EncoderBase * encoder)
 {
-	Wheel::setupDirection(direction);
-	switch(direction) {
-    	case FORWARD:
-    		encoder_->setupDirection(1);
-			break;
-    	case BACKWARD:
-			encoder_->setupDirection(-1);
-      		break;
-   }
+	this->encoder_= encoder;
 }
 
 void WheelEncoder::attachPid(Pid * pid)
@@ -59,10 +51,19 @@ void WheelEncoder::update_()
 	this->currentVelocity_ = encoder_->getVelocity(this->period_pid_controller_);
 	if (pid_ != 0) {
 		this->demandedVelocity_= 
-			pid_->update(this->currentVelocity_,this->period_pid_controller_); //TODO Review this command
+			pid_->update(this->currentVelocity_,this->period_pid_controller_); 
 	} else {
 		this->demandedVelocity_ = targetVelocity_;
 	}
+	  
+  	this->controller_->velocity(demandedVelocity_);
+
+	if (demandedVelocity_ < 0 ) {
+		encoder_->setupDirection(-1);
+	} else {
+		encoder_->setupDirection(1);
+	}
+
 	#ifdef WHEEL_DEBUG
   	Serial.print("WheelEncoder::update_:");
 	Serial.print("\t");
@@ -73,5 +74,4 @@ void WheelEncoder::update_()
   	Serial.print(this->demandedVelocity_);
   	Serial.print("\n");
   	#endif
-	Wheel::move(this->demandedVelocity_); //TODO Change this, create a move_ low level.
 }
