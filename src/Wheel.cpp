@@ -10,6 +10,11 @@ void Wheel::move(float velocity)
   this->controller_->velocity(demandedVelocity_);
 }
 
+void Wheel::update()
+{
+  
+}
+
 void Wheel::stop()
 {
 

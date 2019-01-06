@@ -46,6 +46,11 @@ void WheelEncoder::timer_callback_(void *pArg)
 	wheel->update_();
 }
 
+void WheelEncoder::update()
+{
+	update_();	//TODO CALL THIS FROM OUTSIDE USING A TIMER
+}
+
 void WheelEncoder::update_()
 {
 	this->currentVelocity_ = encoder_->getVelocity(this->period_pid_controller_);
