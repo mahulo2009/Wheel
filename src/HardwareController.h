@@ -11,12 +11,12 @@ class HardwareController {
     
         HardwareController();
        
-        virtual void velocity(float velocity) = 0;
+        virtual void velocity(double velocity) = 0;
 
     protected:
 
         virtual void setupDirection(Wheel_Direction direction) = 0;        
-        virtual void power(float power) = 0 ;
+        virtual void power(double power) = 0 ;
 };
 
 #endif

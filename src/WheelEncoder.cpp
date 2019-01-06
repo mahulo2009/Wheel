@@ -14,7 +14,7 @@ void WheelEncoder::timer_setup_()
 	os_timer_arm(&timer_, this->period_pid_controller_*1000, true);   // timer in ms
 }
 
-void WheelEncoder::move(float velocity)
+void WheelEncoder::move(double velocity)
 {
 	this->targetVelocity_=velocity;
 	if (pid_ != 0) {

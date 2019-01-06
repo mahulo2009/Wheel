@@ -10,22 +10,22 @@ class ArduinoDutySingleMotorHardwareController : public HardwareController {
 
     public:
 
-        ArduinoDutySingleMotorHardwareController(float max_speed,int min_duty, int max_duty);
+        ArduinoDutySingleMotorHardwareController(double max_speed,int min_duty, int max_duty);
         
         void attachPower(int pin);		                                           //attach the power pin selecting
 		void attachDirection(int pin);											   //attach the direction pin
 
         
-        virtual void velocity(float velocity);
+        virtual void velocity(double velocity);
     
     protected:
     
         virtual void setupDirection(Wheel_Direction direction);       
-        virtual void power(float duty);
+        virtual void power(double duty);
 
     private:
 
-        float max_speed_;			    //maximun speed of the motor in radians per second.
+        double max_speed_;			    //maximun speed of the motor in radians per second.
         int min_duty_;				    //minimum duty
         int max_duty_;				    //maximun duty
         int pin_power_;				    //pin number for the motor power, pwm.

@@ -4,7 +4,7 @@ Wheel::Wheel()
 {
 }
 
-void Wheel::move(float velocity)
+void Wheel::move(double velocity)
 { 
   this->demandedVelocity_= velocity;
   this->controller_->velocity(demandedVelocity_);

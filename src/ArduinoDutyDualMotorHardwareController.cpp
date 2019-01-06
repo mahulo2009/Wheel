@@ -1,6 +1,6 @@
 #include "ArduinoDutyDualMotorHardwareController.h"
 
-ArduinoDutyDualMotorHardwareController::ArduinoDutyDualMotorHardwareController(float max_speed,int min_duty, int max_duty):
+ArduinoDutyDualMotorHardwareController::ArduinoDutyDualMotorHardwareController(double max_speed,int min_duty, int max_duty):
     max_speed_(max_speed), min_duty_(min_duty), max_duty_(max_duty)
 {
 }
@@ -42,7 +42,7 @@ void ArduinoDutyDualMotorHardwareController::setupDirection(Wheel_Direction dire
     }
 }
 
-void ArduinoDutyDualMotorHardwareController::velocity(float velocity)
+void ArduinoDutyDualMotorHardwareController::velocity(double velocity)
 {
     if (velocity < 0) {
 		setupDirection(BACKWARD);	
@@ -54,7 +54,7 @@ void ArduinoDutyDualMotorHardwareController::velocity(float velocity)
     power(duty);
 }
 
-void ArduinoDutyDualMotorHardwareController::power(float duty)
+void ArduinoDutyDualMotorHardwareController::power(double duty)
 {
     if (duty<=min_duty_)
         duty=0;
