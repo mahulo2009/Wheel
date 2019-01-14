@@ -40,24 +40,27 @@ void ArduinoDutySingleMotorHardwareController::setupDirection(Wheel_Direction di
 
 void ArduinoDutySingleMotorHardwareController::velocity(double velocity)
 {
+
+    #ifdef ARDUINIO_DUTY_SINGLE_MOTOR_HARDWARE_CONTROLLER_DEBUG
+    Serial.print("ArduinoDutySingleMotorHardwareController::velocity:");
+    Serial.print("\t");
+    Serial.print(velocity);
+    Serial.print("\n");
+    #endif
+
+
     if (velocity < 0) {
 		setupDirection(BACKWARD);	
 	} else {
   		setupDirection(FORWARD);
 	}
 
-  	double duty = ( (max_duty_-min_duty_) * abs(velocity) ) / (max_speed_) + min_duty_;
+  	double duty = 101 * fabs(velocity) ;
     power(duty);
 }
 
 void ArduinoDutySingleMotorHardwareController::power(double duty)
 {
-    if (duty<=min_duty_)
-        duty=0;
-    if (duty>max_duty_)
-        duty=max_duty_;
-
-    this->duty_ = ceil(duty); 
 
     #ifdef ARDUINIO_DUTY_SINGLE_MOTOR_HARDWARE_CONTROLLER_DEBUG
     Serial.print("ArduinoDutySingleMotorHardwareController::power:");
@@ -65,6 +68,14 @@ void ArduinoDutySingleMotorHardwareController::power(double duty)
     Serial.print(this->duty_);
     Serial.print("\n");
     #endif
+
+    if (duty<=min_duty_)
+        duty=0;
+    if (duty>max_duty_)
+        duty=max_duty_;
+
+    this->duty_ = ceil(duty); 
+
 
     analogWrite(pin_power_,this->duty_); 
 }

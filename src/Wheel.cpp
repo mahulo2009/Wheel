@@ -10,7 +10,7 @@ void Wheel::move(double velocity)
   this->controller_->velocity(demandedVelocity_);
 }
 
-void Wheel::update()
+void Wheel::update(double dt)
 {
   
 }

@@ -1,22 +1,14 @@
 #include "WheelEncoder.h"
 
 WheelEncoder::WheelEncoder() : 
-	period_pid_controller_(0.5),pid_(0)
+	pid_(0)
 {
-	timer_setup_();
-}
-
-//TODO CALL FROM OUTISE USING TIMER TASK
-
-void WheelEncoder::timer_setup_()
-{
-	os_timer_setfn(&timer_,WheelEncoder::timer_callback_, this); 
-	os_timer_arm(&timer_, this->period_pid_controller_*1000, true);   // timer in ms
 }
 
 void WheelEncoder::move(double velocity)
 {
 	this->targetVelocity_=velocity;
+
 	if (pid_ != 0) {
 		pid_->setTarget(this->targetVelocity_);
 	}
@@ -24,10 +16,12 @@ void WheelEncoder::move(double velocity)
 
 void WheelEncoder::stop()
 {
-  this->targetVelocity_=0;
+  	this->targetVelocity_=0;
+
 	if (pid_ != 0) {
 		pid_->setTarget(this->targetVelocity_);
 	}  
+	
 }
 
 void WheelEncoder::attachEncoder(EncoderBase * encoder)
@@ -39,24 +33,20 @@ void WheelEncoder::attachPid(Pid * pid)
 {	
 	this->pid_=pid;
 }
-	
-void WheelEncoder::timer_callback_(void *pArg)
+
+
+void WheelEncoder::update(double dt)
 {
-	WheelEncoder * wheel = (WheelEncoder *)pArg;
-	wheel->update_();
+	update_(dt);	//TODO CALL THIS FROM OUTSIDE USING A TIMER
 }
 
-void WheelEncoder::update()
+void WheelEncoder::update_(double dt)
 {
-	update_();	//TODO CALL THIS FROM OUTSIDE USING A TIMER
-}
+	this->currentVelocity_ = encoder_->getVelocity(dt);
 
-void WheelEncoder::update_()
-{
-	this->currentVelocity_ = encoder_->getVelocity(this->period_pid_controller_);
 	if (pid_ != 0) {
 		this->demandedVelocity_= 
-			pid_->update(this->currentVelocity_,this->period_pid_controller_); 
+			pid_->update(this->currentVelocity_,dt); 
 	} else {
 		this->demandedVelocity_ = targetVelocity_;
 	}

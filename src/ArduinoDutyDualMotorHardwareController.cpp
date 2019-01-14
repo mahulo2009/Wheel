@@ -44,6 +44,15 @@ void ArduinoDutyDualMotorHardwareController::setupDirection(Wheel_Direction dire
 
 void ArduinoDutyDualMotorHardwareController::velocity(double velocity)
 {
+
+    #ifdef ARDUINIO_DUTY_DUAL_MOTOR_HARDWARE_CONTROLLER_DEBUG
+    Serial.print("ArduinoDutyDualMotorHardwareController::velocity:");
+    Serial.print("\t");
+    Serial.print(velocity);
+    Serial.print("\n");
+    #endif
+
+
     if (velocity < 0) {
 		setupDirection(BACKWARD);	
 	} else {

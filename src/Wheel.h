@@ -15,7 +15,7 @@ class Wheel : public WheelBase {
 
     virtual void move(double velocity);                                //velocity demanded radians per second.
     virtual void stop();															                //reset duty to 0 and direction to forward
-    virtual void update();
+    virtual void update(double dt);
     
 };
 #endif

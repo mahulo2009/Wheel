@@ -4,7 +4,7 @@
  #include "HardwareController.h"
  #include "Arduino.h"
 
-#define ARDUINIO_DUTY_SINGLE_MOTOR_HARDWARE_CONTROLLER_DEBUG 1
+//#define ARDUINIO_DUTY_SINGLE_MOTOR_HARDWARE_CONTROLLER_DEBUG 1
 
 class ArduinoDutySingleMotorHardwareController : public HardwareController {
 

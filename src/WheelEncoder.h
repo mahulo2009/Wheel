@@ -24,7 +24,7 @@ class WheelEncoder : public WheelBase {
 		
     	virtual void move(double velocity);                          //velocity demanded radians per second.
     	virtual void stop();										//reset duty to 0 and direction to forward
-		virtual void update();
+		virtual void update(double dt);
 
 		inline Pid * getPid() {return pid_;};
 			
@@ -32,11 +32,7 @@ class WheelEncoder : public WheelBase {
 
 		EncoderBase * encoder_;											//Encoder	
 		Pid * pid_;													//Pid
-		os_timer_t timer_;											//Timer for periodic task, Pid controller	
-		double period_pid_controller_;								//Period of the periodic task, Pid controller
-		static void timer_callback_(void *pArg);					//Timer callback function, Pid controller
-		void timer_setup_();										//Setup the timer for the periodic task, Pid controller
-		void update_();												//Pid controller function
+		void update_(double dt);												//Pid controller function
 		
 };
 #endif
