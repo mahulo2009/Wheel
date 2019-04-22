@@ -24,11 +24,6 @@ void WheelEncoder::stop()
 	
 }
 
-void WheelEncoder::attachEncoder(EncoderBase * encoder)
-{
-	this->encoder_= encoder;
-}
-
 void WheelEncoder::attachPid(Pid * pid)
 {	
 	this->pid_=pid;
@@ -37,12 +32,7 @@ void WheelEncoder::attachPid(Pid * pid)
 
 void WheelEncoder::update(double dt)
 {
-	update_(dt);	//TODO CALL THIS FROM OUTSIDE USING A TIMER
-}
-
-void WheelEncoder::update_(double dt)
-{
-	this->currentVelocity_ = encoder_->getVelocity(dt);
+	this->currentVelocity_ = controller_->getVelocity(dt); //TODO UPDATE
 
 	if (pid_ != 0) {
 		this->demandedVelocity_= 
@@ -52,12 +42,6 @@ void WheelEncoder::update_(double dt)
 	}
 	  
   	this->controller_->velocity(demandedVelocity_);
-
-	if (demandedVelocity_ < 0 ) {
-		encoder_->setupDirection(-1);
-	} else {
-		encoder_->setupDirection(1);
-	}
 
 	#ifdef WHEEL_DEBUG
   	Serial.print("WheelEncoder::update_:");
@@ -69,4 +53,5 @@ void WheelEncoder::update_(double dt)
   	Serial.print(this->demandedVelocity_);
   	Serial.print("\n");
   	#endif
+	  
 }

@@ -3,13 +3,13 @@
 
 #include "Arduino.h"
 #include "WheelBase.h"
-#include "EncoderBase.h"
 #include "Pid.h"
 
+#if defined(ESP8266)
 extern "C" {
 #include "user_interface.h"
 }
-
+#endif
 
 #define WHEEL_DEBUG 1
 
@@ -19,20 +19,20 @@ class WheelEncoder : public WheelBase {
   
     	WheelEncoder();												//default constructor. 
 
-		void attachEncoder(EncoderBase * encoder);						//Attach the Encoder
-		void attachPid(Pid * pid);									//Attach the Pid
 		
     	virtual void move(double velocity);                          //velocity demanded radians per second.
     	virtual void stop();										//reset duty to 0 and direction to forward
+
 		virtual void update(double dt);
+		
+		void attachPid(Pid * pid);									//Attach the Pid
+
 
 		inline Pid * getPid() {return pid_;};
 			
 	private:
 
-		EncoderBase * encoder_;											//Encoder	
-		Pid * pid_;													//Pid
-		void update_(double dt);												//Pid controller function
+		Pid * pid_;													//Pid		
 		
 };
 #endif
