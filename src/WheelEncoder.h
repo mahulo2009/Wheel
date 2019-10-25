@@ -11,7 +11,7 @@ extern "C" {
 }
 #endif
 
-#define WHEEL_DEBUG 1
+//#define WHEEL_DEBUG 1
 
 class WheelEncoder : public WheelBase {
 

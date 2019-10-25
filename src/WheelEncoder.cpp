@@ -44,12 +44,12 @@ void WheelEncoder::update(double dt)
   	this->controller_->velocity(demandedVelocity_);
 
 	#ifdef WHEEL_DEBUG
-  	Serial.print("WheelEncoder::update_:");
-	Serial.print("\t");
+  	Serial.print("WheelEncoder::update:");
+	Serial.print(" target\t");
   	Serial.print(targetVelocity_);
-  	Serial.print("\t");
+  	Serial.print(" current\t");
   	Serial.print(currentVelocity_);
-  	Serial.print("\t");
+  	Serial.print(" demanded\t");
   	Serial.print(this->demandedVelocity_);
   	Serial.print("\n");
   	#endif
