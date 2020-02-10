@@ -32,7 +32,7 @@ void WheelEncoder::attachPid(Pid * pid)
 
 void WheelEncoder::update(double dt)
 {
-	this->currentVelocity_ = controller_->getVelocity(dt); //TODO UPDATE
+	this->currentVelocity_ = controller_->getVelocity();
 
 	if (pid_ != 0) {
 		this->demandedVelocity_= 
